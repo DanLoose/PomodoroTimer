@@ -1,5 +1,6 @@
 # PomodoroTimer
--> https://danloose.github.io/PomodoroTimer/ <br><br>
+-> <a href="https://danloose.github.io/PomodoroTimer/" target="_blank">PomodoroTimer</a> <br><br>
+
 -> Olá! Este projeto tem o objetivo de criar um timer que simula a técnica do Pomodoro, que consiste em fazer 25 minutos de alguma atividade e pausas de 5 minutos.
 Haverá mais especificações sobre a técnica no próprio site, em breve. 
 
@@ -9,9 +10,9 @@ Haverá mais especificações sobre a técnica no próprio site, em breve.
   - quando o timer chega em 00:00, o navegador manda um alerta avisando o usuário. (Veja o GIF abaixo)
 <br>  
 -> Futuras Implementações: <br>
-  - Poder alterar o valor do timer. 
-  - Botões de Stop, Restart.
-  - 
-  - Deixe a sua sugestão!
+  - Usuário pode alterar o valor do Timer. <br>
+  - Usuário pode pausar e reiniciar o timer quando quiser.<br>
+  - Deixei sua sugestão!<br>
+
 <br><br>
-![](PomodoroAlert.gif)<br>
+![](PomodoroTimer.gif) <br>
