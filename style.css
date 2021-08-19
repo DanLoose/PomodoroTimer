@@ -19,7 +19,7 @@ body{
     text-align: center;
 }
 
-#button{
+.button{
     text-align: center;
     box-sizing: border-box;
     width: 150px;
@@ -31,13 +31,15 @@ body{
     color:rgb(160, 29, 57) ;
 }
 
-#button:hover{
+#start:hover{
+    cursor: pointer;
     border: rgb(221, 115, 115);
     background-color: rgb(221, 115, 115);
     box-shadow: 2px 2px 4px rgb(85, 38, 38);
 }
 
 .mode{
+    cursor: pointer;
     width: 10px;
     height: 10px;
     margin: 20px;
@@ -54,4 +56,9 @@ body{
 
 .mode-class{
     background-color: rgb(248, 207, 207);
+}
+
+/* CONTROLE DE DISPLAY */
+#stop{
+    display: none;
 }

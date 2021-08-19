@@ -1,7 +1,7 @@
-var button = document.getElementById("button");
-var distance = 1000 * 60 * 25 - 1000;
+var start = document.getElementById("start");
+var distance = 1000 * 60 * 0.1 - 1000;
 
-button.addEventListener("click", timer);
+start.addEventListener("click", timer);
 
 function timer(){
 
@@ -13,6 +13,7 @@ function timer(){
         distance === 0 ? stopTimer(x)  : distance -= 1000;
 
     }, 1000);
+    
     
 }
 
