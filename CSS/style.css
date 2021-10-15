@@ -1,64 +1,84 @@
-*{
+:root {
+    --light-pink: rgb(233, 120, 120);
+    ;
+}
+
+body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto Mono', monospace;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
-
-body{
-    background-color: rgb(248, 207, 207);
-    -webkit-transition: .4s;
-    transition: .4s;
+.screen {
+    background-color: var(--light-pink);
+    height: 100vh;
 }
 
-#timer{
-    margin-top: 100px;
-    margin-bottom: 30px;
-    font-size: 50px;
-    text-align: center;
+header {
+    width: 100%;
 }
 
-.button{
-    text-align: center;
-    box-sizing: border-box;
-    width: 150px;
+.header-inner, .container {
     margin: auto;
-    padding: 10px 20px;
-    border: 1px solid rgb(160, 29, 57);
-    border-radius: 15px;
-    font-weight: bolder;
-    color:rgb(160, 29, 57) ;
+    max-width: 600px;
 }
 
-#start:hover{
+.header-inner {
+    height: 50px;
+    border-bottom: 1px solid #3b3939;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    justify-content: space-between;
+}
+
+.logotipo, .login {
     cursor: pointer;
-    border: rgb(221, 115, 115);
-    background-color: rgb(221, 115, 115);
-    box-shadow: 2px 2px 4px rgb(85, 38, 38);
 }
 
-.mode{
+.user-interface {
+    padding: 36px;
+}
+
+.square {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    padding: 16px;
+}
+
+.square-header {
+    display: flex;
+    justify-content: center;
     cursor: pointer;
-    width: 10px;
-    height: 10px;
-    margin: 20px;
-    border-radius: 50%;
-    background-color: rgb(26, 26, 26);
 }
 
-.dark-mode {
-    background-color: rgb(26, 26, 26);
+.square-header>span {
+    padding: 6px 12px;
+    border-radius: 5px;
+}
+
+.square-body {
+    text-align: center;
+    font-size: 120px;
+    padding: 36px 0;
     color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
 }
 
-.mode-class{
-    background-color: rgb(248, 207, 207);
+.square-footer {
+    text-align: center;
+    padding-bottom: 16px;
 }
 
-/* CONTROLE DE DISPLAY */
-#stop{
-    display: none;
+.square-footer>button {
+    border: none;
+    border-radius: 5px;
+    color: var(--light-pink);
+    font-weight: 900;
+    padding: 16px 60px;
+    cursor: pointer;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.selected {
+    background-color: rgba(0, 0, 0, 0.2);
 }
