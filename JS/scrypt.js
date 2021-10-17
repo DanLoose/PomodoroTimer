@@ -1,39 +1,22 @@
-start.addEventListener("click", () => {
-
-})
-
-minutes.addEventListener("click", () => {
-
-})
-
-function startTimer() {
-
-}
 
 
-
+// ================ SQUARE BODY ================ 
 minutes.addEventListener("change", () => {
-
-    if (minutes.value < 10) {
-        minutes.value = "0" + minutes.value;
-    }
-
-    if (minutes.value > 59) {
-        minutes.value = 59;
-    } else if (minutes.value <= 0) {
-        minutes.value = "00";
-    }
+    handleUserInput(minutes);
 })
 
 seconds.addEventListener("change", () => {
+    handleUserInput(seconds);
+})
 
-    if (seconds.value < 10) {
-        seconds.value = "0" + seconds.value;
-    }
+// ================ SQUARE FOOTER ================
+start.addEventListener("click", () => {
 
-    if (seconds.value > 59) {
-        seconds.value = 59;
-    } else if (seconds.value <= 0) {
-        seconds.value = "00";
-    }
+    let min = Number(minutes.value);
+    let sec = Number(seconds.value);
+
+    let total_secs = min * 60 + sec;
+
+    startTimer(total_secs);
+
 })
