@@ -35,10 +35,14 @@
                         <span> Long Break </span>
                     </div>
                     <div class="square-body">
-                        <span id="timer"> 00:00 </span>
+                        <span id="timer">
+                            <input type="number" id="minutes" value="00" min="00" max="59"></input>
+                            :
+                            <input type="number" id="seconds" value="00" min="00" max="59"></input>
+                        </span>
                     </div>
                     <div class="square-footer">
-                        <button> START </button>
+                        <button name="START"> START </button>
                     </div>
                 </div>
 
@@ -54,6 +58,9 @@
 
     <footer></footer>
 
+
+    <script src="./JS/interface.js"></script>
+    <script src="./JS/scrypt.js"></script>
 
     <!-- <div class="mode" onclick="mode()"></div>
 

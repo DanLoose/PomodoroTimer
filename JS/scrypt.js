@@ -1,30 +1,39 @@
-var start = document.getElementById("start");
-var distance = 1000 * 60 * 0.1 - 1000;
+start.addEventListener("click", () => {
 
-start.addEventListener("click", timer);
+})
 
-function timer(){
+minutes.addEventListener("click", () => {
 
-    var x = setInterval(function(){
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-        document.getElementById("timer").innerText = minutes + ":"+  seconds;
-        distance === 0 ? stopTimer(x)  : distance -= 1000;
+})
 
-    }, 1000);
-    
-    
+function startTimer() {
+
 }
 
-function stopTimer(x){
-    clearInterval(x);
-    alert("Time is over! Take a break from work.");
-}
 
-function mode() {
-    var element = document.body;
-    element.classList.toggle("dark-mode");
-    var element2 = document.getElementsByClassName("mode");
-    element2[0].classList.toggle("mode-class");
- }
+
+minutes.addEventListener("change", () => {
+
+    if (minutes.value < 10) {
+        minutes.value = "0" + minutes.value;
+    }
+
+    if (minutes.value > 59) {
+        minutes.value = 59;
+    } else if (minutes.value <= 0) {
+        minutes.value = "00";
+    }
+})
+
+seconds.addEventListener("change", () => {
+
+    if (seconds.value < 10) {
+        seconds.value = "0" + seconds.value;
+    }
+
+    if (seconds.value > 59) {
+        seconds.value = 59;
+    } else if (seconds.value <= 0) {
+        seconds.value = "00";
+    }
+})
