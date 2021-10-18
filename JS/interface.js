@@ -1,77 +1,100 @@
-const button = document.querySelector("button[id=button]");
+const title = document.querySelector("title");
+
+const pomodoro = document.querySelector("#pomodoro");
+const shortBreak = document.querySelector("#shortBreak");
+const longBreak = document.querySelector("#longBreak");
+const selected = document.querySelector(".selected");
 
 const minutes = document.querySelector("input[id=minutes]");
 const seconds = document.querySelector("input[id=seconds]");
 
-const title = document.querySelector("title");
+const button = document.querySelector("button[id=button]");
 
-const isPaused = {
-    flag: false,
-    pauseListener() {
-        return this.flag;
-    },
-    setPause(f) {
-        this.flag = f;
+window.addEventListener("DOMContentLoaded", () => {
+
+    let option = selected.getAttribute("id");
+    timer.timer(option);
+    updateTimer();
+
+});
+
+button.addEventListener("click", () => {
+
+    let option = selected.getAttribute("id");
+
+    let min = +(minutes.value);
+    let sec = +(seconds.value);
+    let total_secs = min * 60 + sec;
+
+    switch (button.getAttribute("name")) {
+        case "START":
+            timer.startTimer(total_secs);
+            break;
+        case "PAUSE":
+            pause();
+            break;
+        case "RESET":
+            reset();
+            break;
+        default:
+            console.log("Erro desconhecido");
     }
+
+})
+
+
+function updateTimer() {
+    let min = timer.current.minutes;
+    let secs = timer.current.seconds;
+
+    minutes.value = min;
+    seconds.value = secs;
+    handleInputs();
 }
 
-function handleUserInput(e) {
+function handleStringNumbers(e) {
 
-    if (e.value < 10) {
-        e.value = "0" + e.value;
+    let result = e;
+
+    if (result.length > 2) {
+        result.substr(0, 2);
     }
 
-    if (e.value > 59) {
-        e.value = 59;
-    } else if (e.value <= 0) {
-        e.value = "00";
+    if (result.length == 1) {
+        result = "0" + result;
     }
 
-    if (e.value > 0 && button.getAttribute("name") == "RESET") {
-        handleButton("START");
+    if (result == "" || result == 0) {
+        result = "00";
     }
+
+    return result;
 
 }
 
-function startTimer(secs) {
+function handleValueNumbers(u) {
 
-    let total_secs = secs;
+    let result = u;
 
-    let updated_min;
-    let updated_sec;
+    if (result > 59) {
+        result = 59;
+    }
 
-    var myInterval = setInterval(() => {
+    if (result < 0) {
+        result = 0;
+    }
 
-        if (isPaused.pauseListener()) {
-            clearInterval(myInterval);
-        } else {
-            total_secs--;
+    return result;
+}
 
+function handleInputs() {
 
-            updated_min = Math.floor(total_secs / 60);
-            updated_sec = total_secs - 60 * updated_min;
+    minutes.value = handleValueNumbers(minutes.value);
+    seconds.value = handleValueNumbers(seconds.value);
 
-            minutes.value = updated_min;
-            seconds.value = updated_sec;
+    minutes.value = handleStringNumbers(minutes.value);
+    seconds.value = handleStringNumbers(seconds.value);
 
-            //IMPLEMENTAÇÕES PENDENTES
-            title.innerHTML = updated_min + ":" + updated_sec;
-
-            handleUserInput(minutes);
-            handleUserInput(seconds);
-
-            if (updated_min == 0 && updated_sec == 0) {
-                handleButton("RESET");
-                clearInterval(myInterval);
-                setTimeout(() => {
-                    alert("time is over!! time for a break.")
-                }, 1000);
-            }
-        }
-
-
-
-    }, 1000);
 }
 
 function handleButton(option) {

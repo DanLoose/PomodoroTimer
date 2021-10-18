@@ -1,49 +1,45 @@
+function startTimer(secs) {
+
+    let total_secs = secs;
+
+    let updated_min;
+    let updated_sec;
+
+    var myInterval = setInterval(() => {
+
+        if (timer.pauseListener()) {
+            clearInterval(myInterval);
+        } else {
+            total_secs--;
 
 
-// ================ SQUARE BODY ================ 
-minutes.addEventListener("change", () => {
-    handleUserInput(minutes);
-})
+            updated_min = Math.floor(total_secs / 60);
+            updated_sec = total_secs - 60 * updated_min;
 
-seconds.addEventListener("change", () => {
-    handleUserInput(seconds);
-})
+            minutes.value = updated_min;
+            seconds.value = updated_sec;
 
-// ================ SQUARE FOOTER ================
-button.addEventListener("click", () => {
+            //IMPLEMENTAÇÕES PENDENTES
+            title.innerHTML = updated_min + ":" + updated_sec;
 
-    switch (button.getAttribute("name")) {
-        case "START":
-            start();
-            break;
-        case "PAUSE":
-            pause();
-            break;
-        case "RESET":
-            reset();
-            break;
-        default:
-            console.log("Botão não indentificado");
-    }
+            handleUserInput(minutes);
+            handleUserInput(seconds);
 
-})
+            if (updated_min == 0 && updated_sec == 0) {
+                handleButton("RESET");
+                clearInterval(myInterval);
+                setTimeout(() => {
+                    alert("time is over!! time for a break.")
+                }, 1000);
+            }
+        }
 
-// ================ CONTROL FUNCTIONS ================
-function start() {
 
-    isPaused.setPause(false);
-    let min = Number(minutes.value);
-    let sec = Number(seconds.value);
 
-    let total_secs = min * 60 + sec;
-
-    startTimer(total_secs);
-
-    handleButton("PAUSE");
+    }, 1000);
 }
 
 function pause() {
-    isPaused.setPause(true);
     handleButton("START");
 }
 
