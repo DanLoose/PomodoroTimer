@@ -1,45 +1,79 @@
 const title = document.querySelector("title");
-
 const pomodoro = document.querySelector("#pomodoro");
 const shortBreak = document.querySelector("#shortBreak");
 const longBreak = document.querySelector("#longBreak");
-const selected = document.querySelector(".selected");
-
 const minutes = document.querySelector("input[id=minutes]");
 const seconds = document.querySelector("input[id=seconds]");
-
 const button = document.querySelector("button[id=button]");
 
+let selected = document.querySelector(".selected");
+
+
+//  ============== WINDOW IMPORTANT SETTINGS ==============
 window.addEventListener("DOMContentLoaded", () => {
 
     timer.timer();
-    updateTimer();
+    updateDisplay();
 
 });
 
 setInterval(() => {
-    updateTimer();
+    // se o timer estiver rodando
+    if (!(timer.current.pauseListener())) {
+        minutes.disabled = true;
+        seconds.disabled = true;
+        updateDisplay();
+    } else {
+        minutes.disabled = false;
+        seconds.disabled = false;
+    }
 }, 30);
 
+
+// ============== SQUARE HEADER BUTTONS ==============
 pomodoro.addEventListener("click", () => {
+    selected.classList.remove("selected");
+    pomodoro.classList.add("selected");
+    selected = pomodoro;
+
     timer.setCurrent("pomodoro");
-    updateTimer();
+    updateDisplay();
 })
 
 shortBreak.addEventListener("click", () => {
+    selected.classList.remove("selected");
+    shortBreak.classList.add("selected");
+    selected = shortBreak;
+
     timer.setCurrent("shortBreak");
-    updateTimer();
+    updateDisplay();
 })
 
 longBreak.addEventListener("click", () => {
+    selected.classList.remove("selected");
+    longBreak.classList.add("selected");
+    selected = longBreak;
+
     timer.setCurrent("longBreak");
-    updateTimer();
+    updateDisplay();
 })
 
 
-button.addEventListener("click", () => {
+// ============== INPUTS ==============
+minutes.addEventListener("change", () => {
+    handleInputs();
+    timer.current.setTimer(minutes.value, seconds.value);
+    console.log(timer.current);
+})
 
-    let option = selected.getAttribute("id");
+seconds.addEventListener("change", () => {
+    handleInputs();
+    timer.current.setTimer(minutes.value, seconds.value);
+    console.log(timer.current);
+})
+
+// ============== BUTTON ==============
+button.addEventListener("click", () => {
 
     let min = +(minutes.value);
     let sec = +(seconds.value);
@@ -47,13 +81,17 @@ button.addEventListener("click", () => {
 
     switch (button.getAttribute("name")) {
         case "START":
-            timer.startTimer(total_secs, option);
+            manageTimer("START");
+            timer.current.startTimer(total_secs);
+            button.setAttribute("name", "PAUSE");
+            button.innerText = "PAUSE";
             break;
         case "PAUSE":
-            pause();
+            manageTimer("PAUSE");
+            button.setAttribute("name", "START");
+            button.innerText = "START";
             break;
         case "RESET":
-            reset();
             break;
         default:
             console.log("Erro desconhecido");
@@ -61,14 +99,39 @@ button.addEventListener("click", () => {
 
 })
 
-
-function updateTimer() {
+// ================ DISPLAY ================
+function updateDisplay() {
     let min = timer.current.minutes;
     let secs = timer.current.seconds;
 
     minutes.value = min;
     seconds.value = secs;
     handleInputs();
+}
+
+// ================ TIMER CONTROLER ================
+function manageTimer(op) {
+    if (op == "START") {
+        if (selected.getAttribute("id") == "pomodoro") {
+            timer.short.setTimer(5, 0);
+            timer.long.setTimer(10, 0);
+        } else if (selected.getAttribute("id") == "shortBreak") {
+            timer.pomodoro.setTimer(25, 0);
+            timer.long.setTimer(10, 0);
+        } else if (selected.getAttribute("id") == "longBreak") {
+            timer.pomodoro.setTimer(25, 0);
+            timer.short.setTimer(5, 0);
+        }
+    }
+    else if (op == "PAUSE") {
+        if (timer.pomodoro.pauseListener() == false) {
+            timer.pomodoro.setPaused(true);
+        } else if (timer.short.pauseListener() == false) {
+            timer.short.setPaused(true);
+        } else if (timer.long.pauseListener() == false) {
+            timer.long.setPaused(true);
+        }
+    }
 }
 
 
@@ -78,7 +141,7 @@ function handleStringNumbers(e) {
     let result = e;
 
     if (result.length > 2) {
-        result.substr(0, 2);
+        result = "00";
     }
 
     if (result.length == 1) {
@@ -115,13 +178,4 @@ function handleInputs() {
 
     minutes.value = handleStringNumbers(minutes.value);
     seconds.value = handleStringNumbers(seconds.value);
-
 }
-
-function handleButton(option) {
-    // console.log(button);
-    button.innerHTML = option;
-    button.setAttribute("name", option)
-}
-
-

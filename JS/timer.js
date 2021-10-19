@@ -27,8 +27,6 @@ const timer = {
                 break;
         }
     },
-
-
 }
 
 
@@ -45,13 +43,18 @@ function createTimer(min, sec) {
             return this.paused;
         },
 
-        setPaused(option) {
-            this.paused = option;
+        setTimer(m, s) {
+            this.minutes = m;
+            this.seconds = s;
+        },
+
+        setPaused(op) {
+            this.paused = op;
         },
 
         startTimer(secs) {
             let total_secs = secs;
-            this.paused(false);
+            this.setPaused(false);
 
             let myInterval = setInterval(() => {
                 if (this.pauseListener()) {
@@ -64,11 +67,15 @@ function createTimer(min, sec) {
                             alert("time is over!! time for a break.")
                         }, 1000);
                     }
-                    updateTimer(total_secs);
+                    this.updateTimer(total_secs);
                     total_secs--;
                 }
             }, 1000);
 
+        },
+
+        pauseTimer() {
+            this.setPaused(true);
         },
 
         updateMin(total_secs) {
@@ -76,12 +83,12 @@ function createTimer(min, sec) {
         },
 
         updateSecs(total_secs) {
-            this.seconds = total_secs - 60 * this.current.minutes;
+            this.seconds = total_secs - 60 * this.minutes;
         },
 
         updateTimer(total_secs) {
-            updateMin(total_secs);
-            updateSecs(total_secs);
+            this.updateMin(total_secs);
+            this.updateSecs(total_secs);
         },
     }
 }
