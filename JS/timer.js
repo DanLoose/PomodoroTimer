@@ -5,89 +5,83 @@ const timer = {
     long: {},
 
     current: {},
-    paused: undefined,
 
-    timer(option) {
+    timer() {
         this.pomodoro = createTimer(25, 0);
         this.short = createTimer(5, 0);
         this.long = createTimer(10, 0);
 
+        this.current = this.pomodoro.returnTimer();
+    },
+
+    setCurrent(option) {
         switch (option) {
             case "pomodoro":
-                this.current = this.pomodoro;
+                this.current = this.pomodoro.returnTimer();
                 break;
             case "shortBreak":
-                this.current = this.short;
+                this.current = this.short.returnTimer();
                 break;
             case "longBreak":
-                this.current = this.long;
+                this.current = this.long.returnTimer();
                 break;
-
-
         }
-
-        this.paused = true;
     },
 
-    pauseListener() {
-        return this.paused;
-    },
 
-    setPaused(option) {
-        this.paused = option;
-    },
-
-    updateMin(total_secs) {
-        this.current.setMinutes(Math.floor(total_secs / 60));
-    },
-
-    updateSecs(total_secs) {
-        this.current.setSeconds(total_secs - 60 * this.current.minutes);
-    },
-
-    updateTimer(total_secs) {
-        this.updateMin(total_secs);
-        this.updateSecs(total_secs);
-    },
-
-    startTimer(secs) {
-        let total_secs = secs;
-        this.setPaused(false);
-
-        let myInterval = setInterval(() => {
-            if (this.pauseListener()) {
-                clearInterval(myInterval);
-            } else {
-                if (total_secs <= 0) {
-                    this.setPaused(true);
-                    clearInterval(myInterval);
-                    setTimeout(() => {
-                        alert("time is over!! time for a break.")
-                    }, 1000);
-                }
-                this.updateTimer(total_secs);
-                total_secs--;
-            }
-        }, 1000);
-
-    },
 }
 
 
-function createTimer(min, secs) {
+function createTimer(min, sec) {
     return {
         minutes: min,
-        seconds: secs,
-        contagens: 0,
+        seconds: sec,
+        paused: true,
 
-        setMinutes(minutes) {
-            this.minutes = minutes;
+        returnTimer() {
+            return this;
         },
-        setSeconds(seconds) {
-            this.seconds = seconds;
+        pauseListener() {
+            return this.paused;
         },
-        addContagem() {
-            this.contagens++;
+
+        setPaused(option) {
+            this.paused = option;
+        },
+
+        startTimer(secs) {
+            let total_secs = secs;
+            this.paused(false);
+
+            let myInterval = setInterval(() => {
+                if (this.pauseListener()) {
+                    clearInterval(myInterval);
+                } else {
+                    if (total_secs <= 0) {
+                        this.setPaused(true);
+                        clearInterval(myInterval);
+                        setTimeout(() => {
+                            alert("time is over!! time for a break.")
+                        }, 1000);
+                    }
+                    updateTimer(total_secs);
+                    total_secs--;
+                }
+            }, 1000);
+
+        },
+
+        updateMin(total_secs) {
+            this.minutes = Math.floor(total_secs / 60);
+        },
+
+        updateSecs(total_secs) {
+            this.seconds = total_secs - 60 * this.current.minutes;
+        },
+
+        updateTimer(total_secs) {
+            updateMin(total_secs);
+            updateSecs(total_secs);
         },
     }
 }

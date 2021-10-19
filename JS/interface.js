@@ -12,11 +12,30 @@ const button = document.querySelector("button[id=button]");
 
 window.addEventListener("DOMContentLoaded", () => {
 
-    let option = selected.getAttribute("id");
-    timer.timer(option);
+    timer.timer();
     updateTimer();
 
 });
+
+setInterval(() => {
+    updateTimer();
+}, 30);
+
+pomodoro.addEventListener("click", () => {
+    timer.setCurrent("pomodoro");
+    updateTimer();
+})
+
+shortBreak.addEventListener("click", () => {
+    timer.setCurrent("shortBreak");
+    updateTimer();
+})
+
+longBreak.addEventListener("click", () => {
+    timer.setCurrent("longBreak");
+    updateTimer();
+})
+
 
 button.addEventListener("click", () => {
 
@@ -28,7 +47,7 @@ button.addEventListener("click", () => {
 
     switch (button.getAttribute("name")) {
         case "START":
-            timer.startTimer(total_secs);
+            timer.startTimer(total_secs, option);
             break;
         case "PAUSE":
             pause();
@@ -52,6 +71,8 @@ function updateTimer() {
     handleInputs();
 }
 
+
+// ================ HANDLES ================
 function handleStringNumbers(e) {
 
     let result = e;
@@ -102,4 +123,5 @@ function handleButton(option) {
     button.innerHTML = option;
     button.setAttribute("name", option)
 }
+
 
